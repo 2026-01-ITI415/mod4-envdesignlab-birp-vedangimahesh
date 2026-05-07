@@ -7,22 +7,22 @@ public class GameManager : MonoBehaviour
 
     public int totalItems = 5;
     public int collectedItems = 0;
-
-    public TMP_Text statsText;
+    public TMP_Text statsText;    
+    public TMP_Text endText;      
     public GameObject endCanvas;
 
     private float startTime;
 
-    void Awake()
+    private void Awake()
     {
         instance = this;
     }
 
-    void Start()
+    private void Start()
     {
         startTime = Time.time;
 
-        if(endCanvas != null)
+        if (endCanvas != null)
             endCanvas.SetActive(false);
 
         UpdateText();
@@ -31,7 +31,6 @@ public class GameManager : MonoBehaviour
     public void CollectItem()
     {
         collectedItems++;
-
         UpdateText();
 
         if (collectedItems >= totalItems)
@@ -40,30 +39,26 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void EndLevel()
+    private void EndLevel()
     {
         float time = Time.time - startTime;
 
-        if(endCanvas != null)
+        if (endCanvas != null)
             endCanvas.SetActive(true);
 
-        if(statsText != null)
+        if (endText != null)
         {
-            statsText.text =
-                "You escaped the haunted grounds.\n" +
-                "Relics Collected: " + collectedItems + "/" + totalItems + "\n" +
-                "Time: " + time.ToString("F1") + " seconds";
+            endText.text = "You escaped Blackridge Chapel!\n" +
+                           "Relics Collected: " + collectedItems + "/" + totalItems + "\n" +
+                           "Time: " + time.ToString("F1") + " seconds";
         }
 
         Time.timeScale = 0f;
     }
 
-    void UpdateText()
+    private void UpdateText()
     {
-        if(statsText != null)
-        {
-            statsText.text =
-                "Relics: " + collectedItems + "/" + totalItems;
-        }
+        if (statsText != null)
+            statsText.text = "Relics: " + collectedItems + "/" + totalItems;
     }
 }
