@@ -7,8 +7,8 @@ public class GameManager : MonoBehaviour
 
     public int totalItems = 5;
     public int collectedItems = 0;
-    public TMP_Text statsText;    
-    public TMP_Text endText;      
+    public TMP_Text statsText;
+    public TMP_Text endText;
     public GameObject endCanvas;
 
     private float startTime;
@@ -34,9 +34,7 @@ public class GameManager : MonoBehaviour
         UpdateText();
 
         if (collectedItems >= totalItems)
-        {
             EndLevel();
-        }
     }
 
     private void EndLevel()
@@ -47,11 +45,9 @@ public class GameManager : MonoBehaviour
             endCanvas.SetActive(true);
 
         if (endText != null)
-        {
             endText.text = "You escaped Blackridge Chapel!\n" +
-                           "Relics Collected: " + collectedItems + "/" + totalItems + "\n" +
-                           "Time: " + time.ToString("F1") + " seconds";
-        }
+                          "Relics Collected: " + collectedItems + "/" + totalItems + "\n" +
+                          "Time: " + time.ToString("F1") + " seconds";
 
         Time.timeScale = 0f;
     }
