@@ -1,16 +1,35 @@
 using UnityEngine;
+using System.Collections;
 
 public class BaitCollectible : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public GameObject warningText;
+    public float displayTime = 3f;
+
+    private void OnTriggerEnter(Collider other)
     {
-        
+        Debug.Log("Bait collected");
+
+        if (other.GetComponent<CharacterController>() != null)
+        {
+            StartCoroutine(ShowWarning());
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private IEnumerator ShowWarning()
     {
-        
+        if (warningText != null)
+        {
+            warningText.SetActive(true);
+        }
+
+        yield return new WaitForSeconds(displayTime);
+
+        if (warningText != null)
+        {
+            warningText.SetActive(false);
+        }
+
+        Destroy(gameObject);
     }
 }
