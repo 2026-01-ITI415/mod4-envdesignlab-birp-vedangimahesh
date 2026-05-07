@@ -7,9 +7,12 @@ public class GameManager : MonoBehaviour
 
     public int totalItems = 5;
     public int collectedItems = 0;
+
     public TMP_Text statsText;
     public TMP_Text endText;
     public GameObject endCanvas;
+
+    public GameObject[] relics;
 
     private float startTime;
 
@@ -37,6 +40,24 @@ public class GameManager : MonoBehaviour
             EndLevel();
     }
 
+    public void RemoveItem()
+    {
+        if (collectedItems > 0)
+        {
+            collectedItems--;
+            UpdateText();
+        }
+    }
+
+    public void RespawnRelics()
+    {
+        foreach (GameObject relic in relics)
+        {
+            if (relic != null)
+                relic.SetActive(true);
+        }
+    }
+
     private void EndLevel()
     {
         float time = Time.time - startTime;
@@ -45,14 +66,17 @@ public class GameManager : MonoBehaviour
             endCanvas.SetActive(true);
 
         if (endText != null)
-            endText.text = "You escaped Blackridge Chapel!\n" +
-                          "Relics Collected: " + collectedItems + "/" + totalItems + "\n" +
-                          "Time: " + time.ToString("F1") + " seconds";
+        {
+            endText.text =
+                "You escaped Blackridge Chapel!\n" +
+                "Relics Collected: " + collectedItems + "/" + totalItems + "\n" +
+                "Time: " + time.ToString("F1") + " seconds";
+        }
 
         Time.timeScale = 0f;
     }
 
-    private void UpdateText()
+    public void UpdateText()
     {
         if (statsText != null)
             statsText.text = "Relics: " + collectedItems + "/" + totalItems;
